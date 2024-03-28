@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include<stdlib.h>
+typedef struct node{
+    int data;
+    struct node*link;
+    
+}*Node;
+Node createnode(int data){
+Node new=(Node)malloc(sizeof(struct node));
+    if(new==NULL){
+        printf("no memory allocated");
+    }
+    else
+    {
+        new->data=data;
+        new->link=NULL;
+        return new;
+    }
+}
+Node getMiddle(Node first){
+    if(first==NULL ||first->link==NULL)
+      return first;
+     if(first->link->link==NULL){
+         return first->link;
+    }
+    Node slow=first;
+    
+    Node fast=first->link;
+    while(fast!=NULL){
+        fast=fast->link;
+        if(fast!=NULL){
+            fast=fast->link;
+            slow=slow->link;
+        }
+    }
+    return slow;
+}
+void display(Node first){
+    Node curr;
+    curr=first;
+    while(curr!=NULL){
+        printf("%d",curr->data);
+        curr=curr->link;
+    }
+    printf("\n");
+}
+int main(){
+    Node first=NULL;
+    first=createnode(2);
+    first->link=createnode(3);
+    first->link->link=createnode(7);
+    first->link->link->link=createnode(5);
+    printf("original list");
+    display(first);
+    Node middle=getMiddle(first);
+    if(middle!=NULL){
+        printf("%d",middle->data);
+    }
+    else
+    {
+        printf("Linked is empty");
+    }
+    return 0;
+}
